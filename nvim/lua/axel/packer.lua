@@ -46,4 +46,7 @@ return require('packer').startup(function(use)
       "windwp/nvim-autopairs", --generate autopairs
       config = function() require("nvim-autopairs").setup {} end
   }
+  use { "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12"} -- simple to use language server installer
+  use 'vim-airline/vim-airline' -- airline plugin 
   end)
+
