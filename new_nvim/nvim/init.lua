@@ -19,12 +19,11 @@ vim.opt.rtp:prepend(lazypath)
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
---
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-
+  'theprimeagen/harpoon',
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -222,6 +221,18 @@ vim.keymap.set('n', '<leader>h', '<Cmd>-tabnext<CR>')
 vim.keymap.set('n', '<leader>l', '<Cmd>+tabnext<CR>')
 vim.keymap.set('n', '<leader>sc', '<Cmd>vsplit<CR>')
 
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+vim.keymap.set("n", "<C-a>", function() mark.add_file() end) --add file to harpoon
+vim.keymap.set("n", "<C-m>", function() ui.toggle_quick_menu() end) --toggle harpoon menu : ctrl + e
+
+vim.keymap.set("i", "<C-z>", function() ui.nav_file(1) end) --ctrl + h
+vim.keymap.set("i", "<C-x>", function() ui.nav_file(2) end) --ctrl + t
+vim.keymap.set("i", "<C-c>", function() ui.nav_file(3) end) --ctrl + n
+vim.keymap.set("i", "<C-v>", function() ui.nav_file(4) end) --ctrl + s
+
+
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -392,7 +403,8 @@ end
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+    pyright = {},
+    jdtls = {},
   -- rust_analyzer = {},
   -- tsserver = {},
 
