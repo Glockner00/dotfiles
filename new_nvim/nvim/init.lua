@@ -17,7 +17,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: Here is where you install your plugins.
+-- NOTE: install plugins here.
 --  You can configure plugins using the `config` key.
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
@@ -43,7 +43,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -61,13 +61,13 @@ require('lazy').setup({
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
 
-    -- Adds a number of user-friendly snippets
+      -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
     },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',          opts = {} },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -81,7 +81,8 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
+        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
+          { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
         vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
         vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
       end,
@@ -123,7 +124,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -164,7 +165,7 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
--- [[ Setting options ]]
+------------------------------------[[ Setting options ]]-----------------------------------------------------
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
@@ -173,7 +174,7 @@ vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
-
+vim.wo.relativenumber = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
@@ -206,38 +207,61 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- [[ Basic Keymaps ]]
-
+----------------------------------------------[[ Keymaps ]]---------------------------------------------------------
 -- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y"]]) --yank into system clipboard.
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) --search and replace
-vim.keymap.set('n', '<C-e>', '<Cmd>Neotree toggle<CR>') --Toggle file treesitter
-vim.keymap.set('n', '<leader>tn', '<Cmd>tabnew<CR>')
-vim.keymap.set('n', '<leader>tc', '<Cmd>tabclose<CR>')
-vim.keymap.set('n', '<leader>h', '<Cmd>-tabnext<CR>')
-vim.keymap.set('n', '<leader>l', '<Cmd>+tabnext<CR>')
-vim.keymap.set('n', '<leader>sc', '<Cmd>vsplit<CR>')
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })  -- Disables <Space> key in normal and visual modes
 
+-- Tabs
+vim.keymap.set('n', '<leader>tn', '<Cmd>tabnew<CR>')    -- Opens a new tab
+vim.keymap.set('n', '<leader>tc', '<Cmd>tabclose<CR>')  -- Closes the current tab
+vim.keymap.set('n', '<leader>h', '<Cmd>-tabnext<CR>')   -- Switches to the previous tab
+vim.keymap.set('n', '<leader>l', '<Cmd>+tabnext<CR>')   -- Switches to the next tab
+vim.keymap.set('n', '<leader>sc', '<Cmd>vsplit<CR>')    -- Splits the current tab vertically
+
+-- Harpoon key mapping
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
+vim.keymap.set("n", "<C-a>", function() mark.add_file() end)         -- Adds file to Harpoon
+vim.keymap.set("n", "<C-m>", function() ui.toggle_quick_menu() end)  -- Toggles Harpoon menu
+vim.keymap.set("i", "<C-q>", function() ui.nav_file(1) end)          -- Navigates to the previous file in Harpoon
+vim.keymap.set("i", "<C-w>", function() ui.nav_file(2) end)          -- Navigates to the next file in Harpoon
+vim.keymap.set("i", "<C-e>", function() ui.nav_file(3) end)          -- Navigates to the third file in Harpoon
+vim.keymap.set("i", "<C-r>", function() ui.nav_file(4) end)          -- Navigates to the fourth file in Harpoon
 
-vim.keymap.set("n", "<C-a>", function() mark.add_file() end) --add file to harpoon
-vim.keymap.set("n", "<C-m>", function() ui.toggle_quick_menu() end) --toggle harpoon menu : ctrl + e
+-- Moving text
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")  -- Moves selected lines down
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")  -- Moves selected lines up
+vim.keymap.set("n", "J", "mzJ`z")             -- Joins the current line with the line below
+vim.keymap.set("n", "<C-d>", "<C-d>zz")       -- Scrolls the view down
+vim.keymap.set("n", "<C-u>", "<C-u>zz")       -- Scrolls the view up
+vim.keymap.set("n", "n", "nzzzv")             -- Jumps to the next match and centers the view
+vim.keymap.set("n", "N", "Nzzzv")             -- Jumps to the previous match and centers the view
+vim.keymap.set("x", "<leader>p", "\"_dP")     -- Pastes the yanked text and replaces the selection
 
-vim.keymap.set("i", "<C-z>", function() ui.nav_file(1) end) --ctrl + h
-vim.keymap.set("i", "<C-x>", function() ui.nav_file(2) end) --ctrl + t
-vim.keymap.set("i", "<C-c>", function() ui.nav_file(3) end) --ctrl + n
-vim.keymap.set("i", "<C-v>", function() ui.nav_file(4) end) --ctrl + s
+-- Yanking
+vim.keymap.set("n", "<leader>y", "\"+y")  -- Yanks the selected text to the system clipboard in normal mode
+vim.keymap.set("v", "<leader>y", "\"+y")  -- Yanks the selected text to the system clipboard in visual mode
+vim.keymap.set("n", "<leader>Y", "\"+Y")  -- Yanks the entire line to the system clipboard in normal mode
 
+-- Deleting text
+vim.keymap.set("n", "<leader>d", "\"_d")  -- Deletes the selected text without affecting the default register in normal mode
+vim.keymap.set("v", "<leader>d", "\"_d")  -- Deletes the selected text without affecting the default register in visual mode
 
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("i", "<C-c>", "<Esc>")                                                    -- Exits insert mode
+vim.keymap.set("n", "Q", "<nop>")                                                        -- Disables the default behavior of the Q key
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")              -- Creates a new tmux window with tmux-sessionizer
+vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end)                    -- Formats the code using LSP
+vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")                                         -- Jumps to the next error in quickfix list and centers the view
+vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")                                         -- Jumps to the previous error in quickfix list and centers the view
+vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")                                     -- Jumps to the next location in location list and centers the view
+vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")                                     -- Jumps to the previous location in location list and centers the view
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })              -- Makes the current file executable
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })    -- Adjusts upward movement behavior with word wrap
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })    -- Adjusts downward movement behavior with word wrap
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) --search and replace
 
--- [[ Highlight on yank ]]
+-------------------------------------------[[ Highlight on yank ]]---------------------------------------------------
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -248,7 +272,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- [[ Configure Telescope ]]
+------------------------------------------[[ Configure Telescope ]]--------------------------------------------------
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
@@ -282,11 +306,11 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
--- [[ Configure Treesitter ]]
+------------------------------------------ [[ Configure Treesitter ]]--------------------------------------------------
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'java'},
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'java' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = true,
@@ -354,7 +378,7 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- [[ Configure LSP ]]
+----------------------------------------------[[ Configure LSP ]]-------------------------------------------------------
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- In this case, we create a function that lets us more easily define mappings specific
@@ -403,8 +427,8 @@ end
 local servers = {
   -- clangd = {},
   -- gopls = {},
-    pyright = {},
-    jdtls = {},
+  pyright = {},
+  jdtls = {},
   -- rust_analyzer = {},
   -- tsserver = {},
 
@@ -440,7 +464,7 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
--- [[ Configure nvim-cmp ]]
+----------------------------------------------------[[ Configure nvim-cmp ]]---------------------------------------------
 -- See `:help cmp`
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
