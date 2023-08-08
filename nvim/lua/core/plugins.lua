@@ -59,8 +59,10 @@ local plugins = {
     'nvim-lualine/lualine.nvim',
 
     'tmux-plugins/tpm',
-    'christoomey/vim-tmux-navigator',
-
+    {
+        'christoomey/vim-tmux-navigator',
+        lazy = false,
+    },
 
 
 }
