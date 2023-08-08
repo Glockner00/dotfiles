@@ -1,5 +1,5 @@
 require("core.plugin_config.lsp")
-require("core.plugin_config.harpoon")
+require("core.plugin_config.colors")
 require("core.plugin_config.treesitter")
 require("core.plugin_config.undotree")
 require("core.plugin_config.refactoring")
