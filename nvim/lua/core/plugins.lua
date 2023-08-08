@@ -38,7 +38,11 @@ local plugins = {
         }
     },
 
-    'nvim-treesitter/nvim-treesitter',
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.0',
+        dependencies = { {'nvim-lua/plenary.nvim'} }
+    },
 
     {
         'windwp/nvim-autopairs',
@@ -47,7 +51,20 @@ local plugins = {
 
     },
 
+    'nvim-treesitter/nvim-treesitter',
+    "theprimeagen/harpoon",
+    "theprimeagen/refactoring.nvim",
+    "mbbill/undotree",
+    "tpope/vim-fugitive",
+    'nvim-lualine/lualine.nvim',
+
+    'tmux-plugins/tpm',
+    'christoomey/vim-tmux-navigator',
+
+
+
 }
 
 local opts = {}
 require("lazy").setup(plugins, opts)
+
