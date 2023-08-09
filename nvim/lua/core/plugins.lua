@@ -75,6 +75,8 @@ local plugins = {
             -- refer to the configuration section below
         },
     },
+
+    'lervag/vimtex'
 }
 
 local opts = {}
