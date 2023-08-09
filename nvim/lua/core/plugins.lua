@@ -19,7 +19,7 @@ local plugins = {
         as = 'rose-pine',
         config = function()
             vim.cmd('colorscheme rose-pine')
-        end
+         end
     },
 
     {
@@ -56,7 +56,9 @@ local plugins = {
     "theprimeagen/refactoring.nvim",
     "mbbill/undotree",
     "tpope/vim-fugitive",
-    'nvim-lualine/lualine.nvim',
+    'vim-airline/vim-airline',
+    'vim-airline/vim-airline-themes',
+    'folke/zen-mode.nvim',
 
     'tmux-plugins/tpm',
     {
@@ -64,7 +66,15 @@ local plugins = {
         lazy = false,
     },
 
-
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        },
+    },
 }
 
 local opts = {}
