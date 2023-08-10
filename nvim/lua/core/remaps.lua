@@ -17,21 +17,22 @@ vim.keymap.set("n", "<leader>svwm", function()
 end)
 
 -- Editing text
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- Yank selected line to system clipboard
-vim.keymap.set("n", "<leader>Y", [["+Y]])          -- Yank to end of line and copy to system clipboard
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]]) -- Delete selected text
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])                                       -- Yank selected line to system clipboard
+vim.keymap.set("n", "<leader>Y", [["+Y]])                                                -- Yank to end of line and copy to system clipboard
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])                                       -- Delete selected text
+vim.keymap.set("x", "<leader>p", [["_dP]])                                               -- Paste and replace selection
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Search and replace the word that you are on.
 
 -- Miscellanoeus
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("i", "<C-c>", "<Esc>")                                                    -- Exit
-vim.keymap.set("n", "Q", "<nop>")                                                        -- Disable Ex mode
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")                                         -- Format using LSP
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")                                         -- Jump to next quickfix item.
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")                                     -- Jump to prevous quickfix item
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")                                     -- Jump to next location list item
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Jump to previous location list item
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })              -- Make the current file executable
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)                               -- Instead of using a filetree
+vim.keymap.set("i", "<C-c>", "<Esc>")                                       -- Exit
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)                        -- Format using LSP
+vim.keymap.set("n", "Q", "<nop>")                                           -- Disable Ex mode
+vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")                            -- Jump to next quickfix item
+vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")                            -- Jump to previous  quickfix item.
+vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")                        -- Jump to next location list item
+vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")                        -- Jump to previous location list item
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true }) -- Make the current file executable
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
