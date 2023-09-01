@@ -29,3 +29,7 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "120"
+
+vim.g.vimtex_view_method = 'zathura'
+vim.g.vimtex_zathura_viewer = 'zathura'
+

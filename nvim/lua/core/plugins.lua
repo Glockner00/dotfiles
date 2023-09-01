@@ -76,7 +76,8 @@ local plugins = {
         },
     },
 
-    'lervag/vimtex'
+    'godlygeek/tabular',
+    'lervag/vimtex',   -- PDF rendering
 }
 
 local opts = {}

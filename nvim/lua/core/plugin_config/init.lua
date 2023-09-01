@@ -1,4 +1,5 @@
 require("core.plugin_config.lsp")
+require("core.plugin_config.vimtex")
 require("core.plugin_config.trouble")
 require("core.plugin_config.zenmode")
 require("core.plugin_config.colors")

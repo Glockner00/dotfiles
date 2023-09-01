@@ -16,6 +16,16 @@ vim.keymap.set("n", "<leader>svwm", function()
     require("vim-with-me").StopVimWithMe()
 end)
 
+-- pdf viewer
+function OpenPDF()
+    local path = vim.fn.expand('%:p')
+    vim.fn.system('zathura ' .. path)
+end
+
+vim.api.nvim_set_keymap('n', '<leader>z', ':lua OpenPDF()<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>sp', ':vsp<CR>', { noremap = true, silent = true })
+
 -- Editing text
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])                                       -- Yank selected line to system clipboard
 vim.keymap.set("n", "<leader>Y", [["+Y]])                                                -- Yank to end of line and copy to system clipboard
@@ -47,3 +57,5 @@ M.general = {
         ["<C-k>"] = { "<cmd> TmuxNavigateUo<CR>", "window up" },
     }
 }
+
+
