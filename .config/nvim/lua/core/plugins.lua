@@ -81,7 +81,7 @@ local plugins = {
 
     -- UltiSnips for LaTeX snippets
     'SirVer/ultisnips',
-
+    'KeitaNakamura/tex-conceal.vim',
     'honza/vim-snippets',
 }
 

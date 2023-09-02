@@ -58,4 +58,16 @@ M.general = {
     }
 }
 
+-- Define a function to toggle TreeSitter highlighting
+-- tex-conceal.vim does not work with it enabled.
+function ToggleTreeSitterHighlight()
+    if vim.t.ts_highlight_enabled == 1 then
+        vim.t.ts_highlight_enabled = 0
+    else
+        vim.t.ts_highlight_enabled = 1
+    end
+    vim.cmd('TSBufToggle highlight')
+end
 
+-- Map <leader>co to the toggle function
+vim.api.nvim_set_keymap('n', '<leader>co', [[:lua ToggleTreeSitterHighlight()<CR>]], { noremap = true, silent = true })
