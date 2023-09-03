@@ -11,34 +11,40 @@ def env(name):
 
 endglobal
 
+snippet linalg "Math Templete" b
+\documentclass{report}
 
-snippet template "Basic template" b
-\documentclass[a4paper]{article}
+\input{preamble}
+\input{macros}
+\input{letterfonts}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{textcomp}
-\usepackage[dutch]{babel}
-\usepackage{amsmath, amssymb}
-
-
-% figure support
-\usepackage{import}
-\usepackage{xifthen}
-\pdfminorversion=7
-\usepackage{pdfpages}
-\usepackage{transparent}
-\newcommand{\incfig}[1]{%
-	\def\svgwidth{\columnwidth}
-	\import{./figures/}{#1.pdf_tex}
-}
-
-\pdfsuppresswarningpagegroup=1
+\title{\Huge{TATA24}\\Dagens föreläsning}
+\author{\huge{Axel Glöckner}}
+\date{\today}
 
 \begin{document}
+\[
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\pagebreak
+
+\chapter{}
+\section{Random Examples}
 	$0
+\]
 \end{document}
 endsnippet
+
+snippet con "Math Conceal" b
+\[
+${1:here}
+\]
+endsnippet
+
 
 snippet beg "begin{} / end{}" bA
 \\begin{$1}
@@ -51,6 +57,24 @@ snippet ... "ldots" iA
 \ldots
 endsnippet
 
+
+
+snippet gaus "Gauselimination" b
+\begin{pmatrix}
+    $1 \\\
+    $2 \\\
+    $3 \\\
+\end{pmatrix}
+\begin{array}{l}
+    \\\
+    \\\
+    \\\
+\end{array}
+endsnippet
+
+snippet gausarr "arrow for gauselimination" b
+\rotatebox[origin]{${1:rotation_value}}{&\Rsh&$2}
+endsnippet
 snippet table "Table environment" b
 \begin{table}[${1:htpb}]
 	\centering

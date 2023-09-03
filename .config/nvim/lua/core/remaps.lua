@@ -71,3 +71,5 @@ end
 
 -- Map <leader>co to the toggle function
 vim.api.nvim_set_keymap('n', '<leader>co', [[:lua ToggleTreeSitterHighlight()<CR>]], { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>q", ":!zathura " .. vim.fn.expand('%:r') .. ".pdf &<CR>", { noremap = true, silent = true })
+
