@@ -83,6 +83,8 @@ local plugins = {
     'SirVer/ultisnips',
     'KeitaNakamura/tex-conceal.vim',
     'honza/vim-snippets',
+
+    'github/copilot.vim',
 }
 
 local opts = {}
